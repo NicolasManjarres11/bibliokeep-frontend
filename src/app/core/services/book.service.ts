@@ -19,6 +19,10 @@ export class BookService {
     return this.http.get<Book[]>(this.baseUrl);
   }
 
+  createBook(dto : BookRequestDTO): Observable<Book>{
+    return this.http.post<Book>(this.baseUrl, dto);
+  }
+
   searchBooks(query: string): Observable<Book[]> {
     return this.http.get<Book[]>(`${this.baseUrl}/search`, {
       params: { q: query }

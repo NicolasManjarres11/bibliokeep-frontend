@@ -11,21 +11,31 @@
       </p>
     </div>
 
-    <form class="flex w-full gap-2 sm:w-auto" (submit)="$event.preventDefault(); onSearchSubmit()">
-      <input
-        class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm text-slate-900 shadow-sm outline-none placeholder:text-slate-400 focus:border-slate-300 sm:w-80"
-        type="search"
-        placeholder="Buscar por ISBN o título…"
-        [value]="query()"
-        (input)="onQueryInput($any($event.target).value)"
-      />
-      <button
-        type="submit"
-        class="inline-flex items-center justify-center rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-800 active:bg-slate-950"
+    <div class="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center">
+      <form class="flex w-full gap-2 sm:w-auto" (submit)="$event.preventDefault(); onSearchSubmit()">
+        <input
+          class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm text-slate-900 shadow-sm outline-none placeholder:text-slate-400 focus:border-slate-300 sm:w-80"
+          type="search"
+          placeholder="Buscar por ISBN o título…"
+          [value]="query()"
+          (input)="onQueryInput($any($event.target).value)"
+        />
+        <button
+          type="submit"
+          class="inline-flex items-center justify-center rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-800 active:bg-slate-950"
+        >
+          Buscar
+        </button>
+      </form>
+
+      <a
+        routerLink="/library/new"
+        class="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm hover:bg-slate-50"
+        data-cy="library-add-book-button"
       >
-        Buscar
-      </button>
-    </form>
+        Añadir libro
+      </a>
+    </div>
   </div>
 
   <div class="flex flex-wrap items-center gap-2">

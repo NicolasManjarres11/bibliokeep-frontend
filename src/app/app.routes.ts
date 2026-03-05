@@ -3,6 +3,7 @@ import { Routes } from '@angular/router';
 import { MainLayoutComponent } from './core/layouts/main-layout/main-layout.component';
 import { DashboardPage } from './features/dashboard/dashboard.page';
 import { LibraryPage } from './features/library/library.page';
+import { LibraryCreatePage } from './features/library/library-create.page';
 import { LoansPage } from './features/loans/loans.page';
 import { Login } from './features/login/login';
 import { authGuard } from './core/guard/auth-guard';
@@ -17,6 +18,7 @@ export const routes: Routes = [
       { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
       { path: 'dashboard', component: DashboardPage },
       { path: 'library', component: LibraryPage },
+      { path: 'library/new', component: LibraryCreatePage },
       { path: 'loans', component: LoansPage, canActivate: [adminGuard] }
     ]
   },
