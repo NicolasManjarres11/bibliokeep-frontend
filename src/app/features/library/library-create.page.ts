@@ -9,6 +9,7 @@ import { StorageService } from '../../core/services/storage.service';
 import { jwtDecode } from "jwt-decode";
 import { TokenInformacion } from '../../core/models/auth-response.model';
 import { finalize } from 'rxjs';
+import { FileService } from '../../shared/services/file.service';
 
 
 @Component({
@@ -21,6 +22,7 @@ export class LibraryCreatePage {
 
   private readonly router = inject(Router);
   protected readonly  auth = inject(AuthService);
+  private readonly fileService = inject(FileService);
 
   protected readonly isSubmitting = signal(false);
   protected readonly submitError = signal<string | null>(null);
@@ -42,11 +44,18 @@ export class LibraryCreatePage {
     const info = jwtDecode<TokenInformacion>(token);
 
 
-    const authorsArray =
+    //1. enviar a guardar la imagen
+
+    this.fileService.upload(value.thumbnail! ).subscribe({
+      next: (data) => {
+
+        const authorsArray =
     value.authors
       ?.split(',')
       .map((a) => a.trim())
       .filter((a) => !!a) ?? [];
+
+
 
     const dto: BookRequestDTO = {
 
@@ -55,7 +64,7 @@ export class LibraryCreatePage {
       title: value.title ?? '',
       authors: authorsArray,
       description: value.description ?? '',
-      thumbnail: value.thumbnail ?? '',
+      thumbnail: data.url ?? '',
       status: (value.status ?? 'DESEADO') as BookStatus,
       rating: value.rating ?? null,
       isLent: value.isLent ?? false
@@ -82,6 +91,14 @@ export class LibraryCreatePage {
 
     console.log('Nuevo libro enviado', value);
     this.router.navigate(['/library']);
+
+      },
+      error: (error) => {}
+    });
+    //2. cargada la imagen, cargo la url en el thumbnail
+
+
+    
   }
 
   protected onCancel(): void {

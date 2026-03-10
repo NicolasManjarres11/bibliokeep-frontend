@@ -8,7 +8,7 @@ export interface BookFormValue {
   title: string;
   authors: string;
   description: string;
-  thumbnail: string;
+  thumbnail: File | null;
   status: BookStatus;
   rating: number;
   isLent: boolean;
@@ -69,13 +69,21 @@ export class BookFormComponent {
       description: this.fb.nonNullable.control('', {
         validators: [Validators.required, Validators.maxLength(1000)]
       }),
-      thumbnail: this.fb.nonNullable.control('', {
+      thumbnail: 
+      [
+        null as File | null, [
+          Validators.required
+        ]
+      ]
+      
+      
+      /* this.fb.nonNullable.control('', {
         validators: [
           Validators.maxLength(500),
-          // Permite vacío o una URL http/https sencilla
-          Validators.pattern(/^(https?:\/\/.+)?$/)
+          // Permite vacío o una ruta/nombre de archivo de imagen (opcional)
+          Validators.pattern(/^$|^.*\.(jpe?g|png|gif|webp|bmp)$/i)
         ]
-      }),
+      }) */,
       status: this.fb.nonNullable.control<BookStatus>('DESEADO', {
         validators: [Validators.required]
       }),
