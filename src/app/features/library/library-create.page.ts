@@ -31,7 +31,7 @@ export class LibraryCreatePage {
 
 
 
-  protected onSubmit(value: BookFormValue): void {
+  protected async onSubmit(value: BookFormValue) {
     // TODO: conectar con BookService.createBook cuando esté disponible.
     // Por ahora simplemente volvemos al listado tras enviar el formulario.
 
@@ -46,7 +46,9 @@ export class LibraryCreatePage {
 
     //1. enviar a guardar la imagen
 
-    this.fileService.upload(value.thumbnail! ).subscribe({
+    const blob = await this.fileService.compressImage(value.thumbnail!);
+
+    this.fileService.upload(blob ).subscribe({
       next: (data) => {
 
         const authorsArray =

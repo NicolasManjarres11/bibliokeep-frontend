@@ -6,6 +6,7 @@ import { StorageService } from './storage.service';
 import { LoginCredentials } from '../models/login-credentials.model';
 import { AuthResponse } from '../models/auth-response.model';
 import { describe, it, expect, beforeEach, vi, type Mocked } from 'vitest';
+import { environment } from '../../../environments/environment';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -50,7 +51,7 @@ describe('AuthService', () => {
       expect(storageMock.setToken).toHaveBeenCalledWith('token');
     });
 
-    const req = httpMock.expectOne('http://localhost:8080/auth/login');
+    const req = httpMock.expectOne(`${environment.apiUrl}/auth/login`);
     expect(req.request.method).toBe('POST');
     expect(req.request.body).toEqual(credentials);
     req.flush(response);

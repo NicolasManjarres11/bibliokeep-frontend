@@ -6,6 +6,7 @@ import { BookService, type BookRequestDTO } from '../../core/services/book.servi
 import { Book, BookStatus } from '../../core/models/book.model';
 import { of } from 'rxjs';
 import { describe, it, expect, beforeEach, vi, type Mocked } from 'vitest';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('LibraryComponent', () => {
   let component: LibraryComponent;
@@ -22,7 +23,7 @@ describe('LibraryComponent', () => {
     } as unknown as Mocked<BookService>;
 
     await TestBed.configureTestingModule({
-      imports: [LibraryComponent],
+      imports: [LibraryComponent, RouterTestingModule],
       providers: [{ provide: BookService, useValue: bookServiceMock }]
     }).compileComponents();
 

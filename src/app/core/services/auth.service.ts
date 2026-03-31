@@ -5,6 +5,7 @@ import { LoginCredentials } from "../models/login-credentials.model";
 import { AuthResponse } from "../models/auth-response.model";
 import { User } from "../models/user.model";
 import { Observable, tap } from "rxjs";
+import { environment } from '../../../environments/environment'
 
 @Injectable({
     providedIn: "root"
@@ -13,7 +14,7 @@ export class AuthService {
     private http = inject(HttpClient);
     private storage = inject(StorageService);
 
-    private baseUrl = "http://localhost:8080/auth";
+    private baseUrl = `${environment.apiUrl}/auth`;
 
     public currentUser = signal<User | null>(null);
 

@@ -1,8 +1,9 @@
-import { computed, Injectable, signal } from '@angular/core';
+import { computed, effect, Injectable, signal } from '@angular/core';
 import { catchError, finalize, of, tap } from 'rxjs';
 
 import { BookService } from '../../../core/services/book.service';
 import { Book, BookStatus } from '../../../core/models/book.model';
+import { environment } from '../../../../environments/environment';
 
 export type BookStatusFilter = BookStatus | 'ALL';
 
@@ -19,7 +20,12 @@ export class BookStoreService {
     return list.filter((b) => b.status === filter);
   });
 
-  constructor(private readonly bookApi: BookService) {}
+  constructor(private readonly bookApi: BookService) {
+    effect(() => {
+      console.log('Los libros han cambiado: ', this.books());
+      
+    })
+  }
 
   setStatusFilter(status: BookStatusFilter): void {
     this.statusFilter.set(status);
@@ -36,8 +42,16 @@ export class BookStoreService {
       // )
       .subscribe({
         next: (books) => {
-          this.books.set(books);
+
+          this.books.set(books.map(b => {
+            if(!b.thumbnail.startsWith('http')){
+              b.thumbnail = `${environment.apiUrl}`+b.thumbnail
+            }
+            return b;
+          }));
           this.isLoading.set(false);
+          console.log();
+          
         },
         error: (errors) => {
           this.books.set([]);

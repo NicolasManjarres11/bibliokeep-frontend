@@ -4,6 +4,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { StatsService } from './stats.service';
 import { Stats } from '../models/stats.model';
 import { describe, it, expect, beforeEach } from 'vitest';
+import { environment } from '../../../environments/environment';
 
 describe('StatsService', () => {
   let service: StatsService;
@@ -41,7 +42,7 @@ describe('StatsService', () => {
       expect(resp).toEqual(stats);
     });
 
-    const req = httpMock.expectOne('http://localhost:8080/api/stats/dashboard');
+    const req = httpMock.expectOne(`${environment.apiUrl}/api/stats/dashboard`);
     expect(req.request.method).toBe('GET');
     req.flush(stats);
   });

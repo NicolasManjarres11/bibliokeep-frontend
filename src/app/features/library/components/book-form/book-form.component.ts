@@ -43,6 +43,14 @@ export class BookFormComponent {
     return this.form.controls;
   }
 
+  protected onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement | null;
+    const file = input?.files && input.files.length > 0 ? input.files[0] : null;
+
+    this.form.patchValue({ thumbnail: file });
+    this.form.get('thumbnail')?.updateValueAndValidity();
+  }
+
   protected onSubmit(): void {
     this.form.markAllAsTouched();
     if (this.form.invalid) return;
