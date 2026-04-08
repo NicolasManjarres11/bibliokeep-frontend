@@ -20,8 +20,11 @@ jobs:
               with:
                 node-version: '22'
                 cache: 'npm'
-                cache-dependency-path: 'pachage-lock.json'
+                cache-dependency-path: 'package-lock.json'
 
+            
+            - name: "Instalar Angular"
+              run: npm i -g @angular/cli
             - name: "Angular Build"
               run: npm run build:production
 
